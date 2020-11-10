@@ -1,4 +1,3 @@
-#!/bin/python3
 
 def sz_pol(A, sz, key = lambda x: x):
     if len(A) == 0: return 0
@@ -11,7 +10,7 @@ def sz_pol(A, sz, key = lambda x: x):
     if sz > key(A[b]): return b + 1
     return b
 
-def war_tab(A): #O(n*log(log(n)))
+def war_tab(A): #O(n*log(k))
     """ 
     z surowej tablicy buduje tablice wartości, 
     gdzie element to [wartosc, ilosc], 
