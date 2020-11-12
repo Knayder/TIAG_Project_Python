@@ -1,3 +1,0 @@
-print("coś tam")
-
-
