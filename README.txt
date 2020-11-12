@@ -1,3 +1,6 @@
-plan jest taki, robimy 5 branch'y : 
-3 prywatne + 1 do margingu + 1 z gotowcem 
-(nie mergujemy w gotowcu dla bezpieczeństwa)
+<h2>Dependencies</h2>
+https://pypi.org/project/graphviz/
+
+<h2>Contributors</h2>
+https://github.com/Knayder
+https://github.com/kn2282
