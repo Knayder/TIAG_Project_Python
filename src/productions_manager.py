@@ -8,3 +8,6 @@ class ProductionsManager:
             parsed_productions = parse_json_production(file_name)
             for parsed_production in parsed_productions:
                 self.production.append(Production(parsed_production))
+    
+    def get_production(self, index):
+        return self.production[index]
