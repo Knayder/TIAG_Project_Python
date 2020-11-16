@@ -7,16 +7,15 @@ class ProductionEngine:
         self.productions_manager = ProductionsManager(['data/production.json'])
 
     def run(self):
-        print('Hello World')
         production = self.productions_manager.get_production(0)
 
         pydot_graph = pydot.Dot('test', graph_type="graph")
-        pydot_graph.add_node(pydot.Node(name='n1', label='A'))
-        pydot_graph.add_node(pydot.Node(name='n2', label='B'))
-        pydot_graph.add_node(pydot.Node(name='n3', label='X'))
-        pydot_graph.add_edge(pydot.Edge('n1', 'n2'))
-        pydot_graph.add_edge(pydot.Edge('n1', 'n3'))
-        pydot_graph.add_edge(pydot.Edge('n2', 'n3'))
+        pydot_graph.add_node(pydot.Node(name='j1', label='A'))
+        pydot_graph.add_node(pydot.Node(name='j2', label='B'))
+        pydot_graph.add_node(pydot.Node(name='j3', label='X'))
+        pydot_graph.add_edge(pydot.Edge('j1', 'j2'))
+        pydot_graph.add_edge(pydot.Edge('j1', 'j3'))
+        pydot_graph.add_edge(pydot.Edge('j2', 'j3'))
 
 
         graph = Graph(pydot_graph)

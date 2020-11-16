@@ -1,51 +1,79 @@
 import pydot
 from .production import Production
 
+from .rng_engine import get_unique_name
+
 class Graph:
     def __init__(self, graph: pydot.Graph):
         self.graph = graph
     
-    def apply_production(self, production: Production):
-        node: pydot.Node = None
-        for i_node in self.graph.get_node_list():
-            if i_node.get_label() == production.get_left():
-                node = i_node
-                break
-
-        if node == None:
-            return
-        
-        
-        to_reconnect = []
-
+    def find_node_of_label(self, label):
+        for node in self.graph.get_node_list():
+            if node.get_label() == label:
+                return node
+        return None
+    
+    def remove_node_of_name(self, name):
+        names_to_reconnect = []
         for edge in self.graph.get_edge_list():
             source = edge.get_source()
             destination = edge.get_destination()
-            name = node.get_name()
             if destination == name:
-                to_reconnect.append(source)
+                names_to_reconnect.append(source)
 
             elif source == name:
-                to_reconnect.append(destination)
+                names_to_reconnect.append(destination)
             
             else:
                 continue
 
             self.graph.del_edge(source, destination)
+        self.graph.del_node(name)
+        return names_to_reconnect
+    
         
-        self.graph.del_node(node.get_name())
 
-
-        for node_i in production.get_right().get_node_list():
-            self.graph.add_node(node_i) # Automagicly change name to label and add random unique name
-        for edge_i in production.get_right().get_edge_list():
-            self.graph.add_edge(edge_i) # Same as above
+    def apply_production(self, production: Production):
+        node_to_replace: pydot.Node = self.find_node_of_label(production.get_left())
+        if node_to_replace == None:
+            print('Cant find any vertex to do production!')
+            return
         
-        transformation = production.get_transformation()
-        for i in to_reconnect:
-            temp = transformation[self.graph.get_node(i)[0].get_label()]
-            for node_i in production.get_right().get_node_list():
-                if node_i.get_label() == temp:
-                    self.graph.add_edge(pydot.Edge( i, node_i.get_name() ))
+        try:
+            names_to_reconnect = self.remove_node_of_name(node_to_replace.get_name())
+        except:
+            print('Wrong left production\'s side')
 
+        new_subgraph_dict = {}
+
+        for edge in production.get_right().get_edge_list():
+            source = get_unique_name()
+            source_label = edge.get_source()
+
+            destination = get_unique_name()
+            destination_label = edge.get_destination()
+
+            self.graph.add_node( pydot.Node(
+                name=source,
+                label=source_label
+            ) )
+            self.graph.add_node( pydot.Node(
+                name=destination,
+                label=destination_label
+            ) )
+            self.graph.add_edge( pydot.Edge(source, destination) )
+
+            new_subgraph_dict[source_label] = source
+            new_subgraph_dict[destination_label] = destination
             
+        transformation = production.get_transformation()
+
+        for name_to_reconnect in names_to_reconnect:
+            label_to_reconnect = self.graph.get_node(name_to_reconnect)[0].get_label()
+            try:
+                self.graph.add_edge(pydot.Edge(
+                    name_to_reconnect,
+                    new_subgraph_dict[transformation[label_to_reconnect]]
+                ))
+            except:
+                print('Wrong transformation settings')
