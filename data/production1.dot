@@ -1,4 +1,0 @@
-graph graphname {
-    a -- Y -- c
-    b -- Y -- h
-}
