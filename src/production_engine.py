@@ -3,8 +3,8 @@ from utility.graph import Graph
 import pydot
 
 class ProductionEngine:
-    def __init__(self):
-        self.productions_manager = ProductionsManager(['data/production.json'])
+    def __init__(self, file_paths):
+        self.productions_manager = ProductionsManager(file_paths)
 
     def run(self):
         production = self.productions_manager.get_production(0)
