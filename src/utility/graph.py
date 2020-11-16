@@ -1,6 +1,5 @@
 import pydot
 from .production import Production
-
 from .rng_engine import get_unique_name
 
 class Graph:

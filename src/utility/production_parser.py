@@ -1,6 +1,6 @@
 import json
 import pydot
-
+from os.path import dirname, join as path_join
 
 class ParsedProduction:
     def __init__(self, name, left, right, transformation):
@@ -20,7 +20,7 @@ class ParsedProduction:
 def parse_json_production(file_path):
     with open(file_path) as json_file:
         data = json.load(json_file)
-        
+        file_dir = dirname(file_path)
         parsed_productions = []
 
         for key in data:
@@ -29,7 +29,7 @@ def parse_json_production(file_path):
             parsed_productions.append(ParsedProduction(
                 name=key, #string of production name
                 left=production['left'], #single vertex
-                right=pydot.graph_from_dot_file(production['right'])[0], #pydot.Graph of right side of production
+                right=pydot.graph_from_dot_file(path_join(file_dir, production['right']))[0], #pydot.Graph of right side of production
                 transformation=production['transformation'] #dictionary of transformations
             )) 
         return parsed_productions
