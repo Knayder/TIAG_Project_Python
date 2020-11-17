@@ -3,6 +3,5 @@ __pycache__
 *.png
 *.pdf
 *.zip
-data
 simple_test.py
-test.dot
+test*

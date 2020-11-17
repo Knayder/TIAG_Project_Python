@@ -35,13 +35,14 @@ class Graph:
     def apply_production(self, production: Production):
         node_to_replace: pydot.Node = self.find_node_of_label(production.get_left())
         if node_to_replace == None:
-            raise ValueError('Cant find any vertex to do production!')
+            print('Cant find any vertex to do production!')
             return
         
         try:
             names_to_reconnect = self.remove_node_of_name(node_to_replace.get_name())
         except:
-            raise ValueError('Wrong left production\'s side')
+            print('Wrong left production\'s side')
+            return
 
         new_subgraph_dict = {}
 
@@ -75,4 +76,5 @@ class Graph:
                     new_subgraph_dict[transformation[label_to_reconnect]]
                 ))
             except:
-                raise ValueError('Wrong transformation settings')
+                print('Wrong transformation settings')
+                return
