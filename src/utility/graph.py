@@ -47,24 +47,24 @@ class Graph:
         new_subgraph_dict = {}
 
         for edge in production.get_right().get_edge_list():
-            source = get_unique_name()
             source_label = edge.get_source()
+            source_name = get_unique_name() if source_label not in new_subgraph_dict else new_subgraph_dict[source_label]
 
-            destination = get_unique_name()
             destination_label = edge.get_destination()
+            destination_name = get_unique_name() if destination_label not in new_subgraph_dict else new_subgraph_dict[destination_label]
 
             self.graph.add_node( pydot.Node(
-                name=source,
+                name=source_name,
                 label=source_label
             ) )
             self.graph.add_node( pydot.Node(
-                name=destination,
+                name=destination_name,
                 label=destination_label
             ) )
-            self.graph.add_edge( pydot.Edge(source, destination) )
+            self.graph.add_edge( pydot.Edge(source_name, destination_name) )
 
-            new_subgraph_dict[source_label] = source
-            new_subgraph_dict[destination_label] = destination
+            new_subgraph_dict[source_label] = source_name
+            new_subgraph_dict[destination_label] = destination_name
             
         transformation = production.get_transformation()
 
