@@ -38,12 +38,12 @@ class Statistics:
 
     def get_statistic(self):
         return {
-            'number of nodes': self.number_of_nodes()
-            'number of edges': self.number_of_edges()
-            'number of subgraphs': self.number_of_subgraphs()
-            'averge vertex degree': self.averge_vertex_degree
-            'averge vertex abcd degree': self.averge_vertex_degree_abcd
-            'averge number of nodes in subgraphs': self.subgraphs_avarge_degree
+            'number of nodes': self.number_of_nodes(),
+            'number of edges': self.number_of_edges(),
+            'number of subgraphs': self.number_of_subgraphs(),
+            'averge vertex degree': self.averge_vertex_degree(),
+            'averge vertex abcd degree': self.averge_vertex_degree_abcd(),
+            'averge number of nodes in subgraphs': self.subgraphs_avarge_degree(),
         }
 
     def __repr__(self):
