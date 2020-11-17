@@ -1,6 +1,6 @@
-import graph
+from .graph import *
 import pydot
-import enum.Enum
+import enum
 
 #class StatisticsKeys(enum.Enum):
     
@@ -8,11 +8,14 @@ import enum.Enum
 
 
 class Statistics:
-    def __init__(self, py_graph: graph.Graph):
-        self.graph: pydot.Graph = py_graph.graph
+    def __init__(self, py_graph):
+        self.graph = py_graph
 
     def number_of_nodes(self):
         return len(self.graph.get_node_list())
+    
+    def number_of_abcd_nodes(self):
+        return len(list(filter( lambda x: str(x.get_label()) in 'abcd', self.graph.get_node_list())))
 
     def number_of_edges(self):
         return len(self.graph.get_edge_list())
@@ -24,17 +27,18 @@ class Statistics:
         return len(self.subgraphs())
 
     def averge_vertex_degree(self): 
-        return self.number_of_edges * 2 / self.number_of_nodes
+        return self.number_of_edges() * 2 / self.number_of_nodes()
     
     def averge_vertex_degree_abcd(self):
         count = 0
-        for edge in self.graph.graph.get_edge_list():
-            if edge.get_source().get_label() in 'abcd': count += 1
-            if edge.get_destination().get_label() in 'abcd': count += 1
+        for edge in self.graph.get_edge_list():
+            if edge.get_source() in 'abcd': count += 1
+            if edge.get_destination() in 'abcd': count += 1
         return count/self.number_of_nodes()
     
     def subgraphs_avarge_degree(self):
-        return self.number_of_subgraphs() / self.number_of_nodes()
+        if self.number_of_abcd_nodes() == 0: return 0 
+        return self.number_of_subgraphs() / self.number_of_abcd_nodes()
 
     def get_statistic(self):
         return {
