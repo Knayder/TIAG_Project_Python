@@ -21,7 +21,7 @@ class ProductionEngine:
         graph = Graph(pydot_graph)
 
         graph.apply_production(production)
-        pydot_graph.write_png('test.png')
+        pydot_graph.write('test.dot')
 
 
         

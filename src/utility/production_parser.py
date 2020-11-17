@@ -19,7 +19,11 @@ class ParsedProduction:
 
 def parse_json_production(file_path):
     with open(file_path) as json_file:
-        data = json.load(json_file)
+        try:
+            data = json.load(json_file)
+        except json.decoder.JSONDecodeError:
+            raise TypeError(file_path + 'is not a json file')
+
         file_dir = dirname(file_path)
         parsed_productions = []
 

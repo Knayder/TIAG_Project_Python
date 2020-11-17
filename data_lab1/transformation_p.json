@@ -1,0 +1,53 @@
+{
+    "Production1":{
+        "left": "X",
+        "right": "production1.dot",
+        "transformation": {
+            "a": "Y",
+            "b": "c",
+            "c": "Y",
+            "d": "a",
+            "X": "c",
+            "Y": "Y"
+        }
+    },
+
+    "Production2":{
+        "left": "X",
+        "right": "production2.dot",
+        "transformation": {
+            "a": "b",
+            "b": "X",
+            "c": "d",
+            "d": "X",
+            "X": "b",
+            "Y": "X"
+        }
+    },
+
+    "Production3":{
+        "left": "X",
+        "right": "production3.dot",
+        "transformation": {
+            "a": "X",
+            "b": "Y",
+            "c": "X",
+            "d": "Y",
+            "X": "X",
+            "Y": "Y"
+        }
+    },
+
+    "Production4":{
+        "left": "X",
+        "right": "production4.dot",
+        "transformation": {
+            "a": "c",
+            "b": "c",
+            "c": "c",
+            "d": "c",
+            "X": "c",
+            "Y": "c"
+        }
+    }
+}
