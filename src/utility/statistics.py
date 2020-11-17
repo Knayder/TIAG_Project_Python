@@ -1,5 +1,11 @@
 import graph
 import pydot
+import enum.Enum
+
+#class StatisticsKeys(enum.Enum):
+    
+
+
 
 class Statistics:
     def __init__(self, py_graph: graph.Graph):
