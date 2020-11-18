@@ -2,7 +2,13 @@ from .graph import *
 import pydot
 import enum
 
-#class StatisticsKeys(enum.Enum):
+class StatisticsKeys(enum.Enum):
+    no_nodes = 'number of nodes'
+    no_edges = 'number of edges'
+    no_subgraphs = 'number of subgraphs'
+    averge_vertex_degree = 'averge vertex degree'
+    averge_vertex_degree_abcd = 'averge vertex abcd degree'
+    subgraphs_avarge_degree = 'averge number of nodes in subgraphs'
     
 
 
