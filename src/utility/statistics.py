@@ -11,6 +11,9 @@ class Statistics:
     def __init__(self, py_graph):
         self.graph = py_graph
 
+    def find_node_by_name(self, name): 
+        return list(filter(lambda x: x.get_name() == name, self.graph.get_node_list()))[0]
+
     def number_of_nodes(self):
         return len(self.graph.get_node_list())
     
@@ -21,7 +24,18 @@ class Statistics:
         return len(self.graph.get_edge_list())
 
     def subgraphs(self):
-        return self.graph.get_subgraph_list()
+        node_sets = [{i.get_name()} for i in self.graph.get_node_list()]
+        def marge_set(node1, node2):
+            set1 = list(filter(lambda x: node1 in node_sets[x], range(len(node_sets))))[0]
+            set2 = list(filter(lambda x: node2 in node_sets[x], range(len(node_sets))))[0] 
+            if set1 == set2: return
+            node_sets[set1] = node_sets[set1].union(node_sets[set2])
+            del node_sets[set2]
+
+        for edge in self.graph.get_edge_list():
+            marge_set(edge.get_source(), edge.get_destination())
+        return node_sets
+
 
     def number_of_subgraphs(self):
         return len(self.subgraphs())
@@ -30,16 +44,15 @@ class Statistics:
         return self.number_of_edges() * 2 / self.number_of_nodes()
     
     def averge_vertex_degree_abcd(self):
-        find_node_by_name = lambda name: list(filter(lambda x: x.get_name() == name, self.graph.get_node_list()))[0]
         if self.number_of_abcd_nodes() == 0: return 0 
         count = 0
         for edge in self.graph.get_edge_list():
-            if str(find_node_by_name(edge.get_source()).get_label()) in 'abcd': count += 1
-            if str(find_node_by_name(edge.get_destination()).get_label()) in 'abcd': count += 1
+            if str(self.find_node_by_name(edge.get_source()).get_label()) in 'abcd': count += 1
+            if str(self.find_node_by_name(edge.get_destination()).get_label()) in 'abcd': count += 1
         return count/self.number_of_abcd_nodes()
     
     def subgraphs_avarge_degree(self):
-        return self.number_of_subgraphs() / self.number_of_nodes()
+        return self.number_of_nodes() / self.number_of_subgraphs() 
 
     def get_statistic(self):
         return {
