@@ -30,15 +30,16 @@ class Statistics:
         return self.number_of_edges() * 2 / self.number_of_nodes()
     
     def averge_vertex_degree_abcd(self):
+        find_node_by_name = lambda name: list(filter(lambda x: x.get_name() == name, self.graph.get_node_list()))[0]
+        if self.number_of_abcd_nodes() == 0: return 0 
         count = 0
         for edge in self.graph.get_edge_list():
-            if edge.get_source() in 'abcd': count += 1
-            if edge.get_destination() in 'abcd': count += 1
-        return count/self.number_of_nodes()
+            if str(find_node_by_name(edge.get_source()).get_label()) in 'abcd': count += 1
+            if str(find_node_by_name(edge.get_destination()).get_label()) in 'abcd': count += 1
+        return count/self.number_of_abcd_nodes()
     
     def subgraphs_avarge_degree(self):
-        if self.number_of_abcd_nodes() == 0: return 0 
-        return self.number_of_subgraphs() / self.number_of_abcd_nodes()
+        return self.number_of_subgraphs() / self.number_of_nodes()
 
     def get_statistic(self):
         return {
