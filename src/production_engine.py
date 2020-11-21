@@ -1,27 +1,50 @@
 from productions_manager import *
 from utility.graph import Graph
+from utility.rng_engine import get_unique_name
 import pydot
 
+def load_start_graph( start_graph):
+    file_graph = pydot.graph_from_dot_file(start_graph)[0]
+    start_production = Production(ParsedProduction('Start Production', 'S', file_graph, None))
+
+    pydot_graph = pydot.Dot('Graph', graph_type="graph")
+    pydot_graph.add_node(pydot.Node(name=get_unique_name(), label='S'))
+
+    graph = Graph(pydot_graph)
+
+    graph.apply_production(start_production)
+    return graph, pydot_graph
+
 class ProductionEngine:
-    def __init__(self):
-        self.productions_manager = ProductionsManager(['data/transformation_p.json'])
-
-    def run(self):
-        production = self.productions_manager.get_production(0)
-        pydot_graph = pydot.Dot('test', graph_type="graph")
-        pydot_graph.add_node(pydot.Node(name='j1', label='X'))
-        #pydot_graph.add_node(pydot.Node(name='j1', label='A'))
-        #pydot_graph.add_node(pydot.Node(name='j2', label='B'))
-        #pydot_graph.add_node(pydot.Node(name='j3', label='X'))
-        #pydot_graph.add_edge(pydot.Edge('j1', 'j2'))
-        #pydot_graph.add_edge(pydot.Edge('j1', 'j3'))
-        #pydot_graph.add_edge(pydot.Edge('j2', 'j3'))
+    def __init__(self, file_paths, start_graph_path):
+        self.productions_manager = ProductionsManager(file_paths)
+        self.graph, self.pydot_graph = load_start_graph(start_graph_path)
 
 
-        graph = Graph(pydot_graph)
+        self.legacy_index = 0
+        self.legacy_graphs = []
+        self.save_to_legacy('Start')
 
-        graph.apply_production(production)
-        pydot_graph.write_png('test.png')
+    def save_to_legacy(self, production_name):
+        path = 'output/graph' + str(len(self.legacy_graphs)) + '.png'
+        self.legacy_graphs.append( (path, production_name) )
+        self.pydot_graph.write_png(path)
+
+    def current(self):
+        return self.legacy_graphs[self.legacy_index]
+
+    def next(self):
+        if self.legacy_index == len(self.legacy_graphs) - 1:
+            production = self.productions_manager.get_random_production()
+            self.graph.apply_production(production)
+            self.save_to_legacy(production.get_name())
+        self.legacy_index += 1
+        return self.current()
+    
+    def previous(self):
+        if self.legacy_index > 0:
+            self.legacy_index -= 1
+        return self.current()
 
 
         

@@ -1,6 +1,6 @@
 from utility.production_parser import *
 from utility.production import *
-
+import random
 class ProductionsManager:
     def __init__(self, file_names):
         self.production = []
@@ -11,3 +11,6 @@ class ProductionsManager:
     
     def get_production(self, index):
         return self.production[index]
+    
+    def get_random_production(self):
+        return self.production[random.randrange(len(self.production))]
