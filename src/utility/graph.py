@@ -46,6 +46,17 @@ class Graph:
 
         new_subgraph_dict = {}
 
+        for node in production.get_right().get_node_list():
+            node_label = node.get_name()
+            node_name = get_unique_name()
+
+            self.graph.add_node( pydot.Node(
+                name = node_name,
+                label = node_label
+            ))
+
+            new_subgraph_dict[node_label] = node_name
+
         for edge in production.get_right().get_edge_list():
             source_label = edge.get_source()
             source_name = get_unique_name() if source_label not in new_subgraph_dict else new_subgraph_dict[source_label]
