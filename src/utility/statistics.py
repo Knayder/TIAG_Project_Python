@@ -18,13 +18,7 @@ class Statistics:
         self.graph = py_graph
 
     def get_list_of_node(self):
-        name_sets = []
-        node_sets = []
-        for vertex in self.graph.get_node_list():
-            if vertex.get_name() not in name_sets: 
-                name_sets.append(vertex.get_name())
-                node_sets.append(vertex)
-        return node_sets
+        return self.graph.get_node_list()
 
     def find_node_by_name(self, name): 
         return list(filter(lambda x: x.get_name() == name, self.get_list_of_node()))[0]
