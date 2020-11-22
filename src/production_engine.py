@@ -32,13 +32,27 @@ class ProductionEngine:
 
     def current(self):
         return self.legacy_graphs[self.legacy_index]
+    
+    def current_index(self):
+        return self.current_index
+    
+    def production_list(self):
+        return self.legacy_graphs
 
     def next(self):
         if self.legacy_index == len(self.legacy_graphs) - 1:
-            production = self.productions_manager.get_random_production()
-            self.graph.apply_production(production)
-            self.save_to_legacy(production.get_name())
-        self.legacy_index += 1
+            indices = [x for x in range(self.productions_manager.size())]
+            random.shuffle(indices)
+
+            for index in indices:
+                production = self.productions_manager.get_production(index)
+                if self.graph.apply_production(production):
+                    self.save_to_legacy(production.get_name())
+                    self.legacy_index += 1
+                    break;
+            
+        else:
+            self.legacy_index += 1
         return self.current()
     
     def previous(self):

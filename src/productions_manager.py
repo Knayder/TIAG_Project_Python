@@ -11,6 +11,9 @@ class ProductionsManager:
     
     def get_production(self, index):
         return self.production[index]
-    
+        
+    def size(self):
+        return len(self.production)
+
     def get_random_production(self):
         return self.production[random.randrange(len(self.production))]

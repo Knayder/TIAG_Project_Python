@@ -36,8 +36,7 @@ class Graph:
     def apply_production(self, production: Production):
         node_to_replace: pydot.Node = self.find_node_of_label(production.get_left())
         if node_to_replace == None:
-            print('Cant find any vertex to do production!')
-            return
+            return False
         
         try:
             names_to_reconnect = self.remove_node_of_name(node_to_replace.get_name())
@@ -88,3 +87,4 @@ class Graph:
                 ))
             except:
                 print('Wrong transformation settings')
+        return True
