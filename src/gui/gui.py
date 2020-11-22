@@ -1,8 +1,7 @@
-from utility.constants import *
-import tkinter as tk
-from utility.buttons import *
-from utility.statistics_output import *
-from utility.productions_history import *
+from src.gui.constants import *
+from src.gui.buttons import *
+from src.gui.statistics_output import *
+from src.gui.productions_history import *
 from PIL import Image, ImageTk
 
 class Gui:

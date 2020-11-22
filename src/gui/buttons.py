@@ -1,6 +1,6 @@
 import  tkinter as tk
 from PIL import Image, ImageTk
-from statistics import StatisticsKeys #Statystyki Krzyśka - potrzebne do zmiany enuma na odp. stringa? linia 27
+from src.utility.statistics import StatisticsKeys #Statystyki Krzyśka - potrzebne do zmiany enuma na odp. stringa? linia 27
 
 class Buttons:
     def __init__(self, gui):
@@ -33,7 +33,7 @@ class Buttons:
         graph_path = self.gui.production_engine.previous()  # string representing path to current graph image
         list_of_productions = self.gui.production_engine.productions_list()  #list of tuples (png_path, prod_name)
         production_index = self.gui.production_engine.current_index()  # current production index
-        statistics = self.production_engine.get_statistics()  # current graph statistics in dictionary
+        statistics = self.gui.production_engine.get_statistics()  # current graph statistics in dictionary
 
         # clear old output
         self.clear_old_output()
@@ -56,7 +56,7 @@ class Buttons:
         graph_path = self.gui.production_engine.next() #string representing path to current graph image
         list_of_productions = self.gui.production_engine.productions_list() #list of tuples (png_path, prod_name)
         production_index = self.gui.production_engine.current_index() #current production index
-        statistics = self.production_engine.get_statistics() #current graph statistics in dictionary
+        statistics = self.gui.production_engine.get_statistics() #current graph statistics in dictionary
 
         #clear old output
         self.clear_old_output()

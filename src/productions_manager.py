@@ -1,5 +1,5 @@
-from utility.production_parser import *
-from utility.production import *
+from src.utility.production_parser import *
+from src.utility.production import *
 import random
 class ProductionsManager:
     def __init__(self, file_names):

@@ -1,6 +1,6 @@
-from productions_manager import *
-from utility.graph import Graph
-from utility.rng_engine import get_unique_name
+from src.productions_manager import *
+from src.utility.graph import Graph
+from src.utility.rng_engine import get_unique_name
 import pydot
 
 def load_start_graph( start_graph):
