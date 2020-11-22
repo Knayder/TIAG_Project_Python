@@ -17,20 +17,23 @@ class Statistics:
     def __init__(self, py_graph):
         self.graph = py_graph
 
+    def get_list_of_node(self):
+        return self.graph.get_node_list()
+
     def find_node_by_name(self, name): 
-        return list(filter(lambda x: x.get_name() == name, self.graph.get_node_list()))[0]
+        return list(filter(lambda x: x.get_name() == name, self.get_list_of_node()))[0]
 
     def number_of_nodes(self):
-        return len(self.graph.get_node_list())
+        return len(self.get_list_of_node())
     
     def number_of_abcd_nodes(self):
-        return len(list(filter( lambda x: str(x.get_label()) in 'abcd', self.graph.get_node_list())))
+        return len(list(filter( lambda x: str(x.get_label()) in 'abcd', self.get_list_of_node())))
 
     def number_of_edges(self):
         return len(self.graph.get_edge_list())
 
     def subgraphs(self):
-        node_sets = [{i.get_name()} for i in self.graph.get_node_list()]
+        node_sets = [{i.get_name()} for i in self.get_list_of_node()]
         def marge_set(node1, node2):
             set1 = list(filter(lambda x: node1 in node_sets[x], range(len(node_sets))))[0]
             set2 = list(filter(lambda x: node2 in node_sets[x], range(len(node_sets))))[0] 
