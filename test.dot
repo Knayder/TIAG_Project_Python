@@ -1,0 +1,13 @@
+graph test {
+j1 [label=a];
+j2 [label=b];
+j1 -- j2;
+__n1__ [label=c];
+__n2__ [label=Y];
+__n1__ -- __n2__;
+__n3__ [label=Y];
+__n4__ [label=a];
+__n3__ -- __n4__;
+j1 -- __n3__;
+j2 -- __n1__;
+}
