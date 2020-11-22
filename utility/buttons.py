@@ -1,6 +1,6 @@
 import  tkinter as tk
 from PIL import Image, ImageTk
-import statistics as stat #Statystyki Krzyśka - potrzebne do zmiany enuma na odp. stringa? linia 27
+from statistics import StatisticsKeys #Statystyki Krzyśka - potrzebne do zmiany enuma na odp. stringa? linia 27
 
 class Buttons:
     def __init__(self, gui):
@@ -15,24 +15,24 @@ class Buttons:
         self.gui.main_graph_label.grid_forget()
 
     def print_history(self, list_of_productions, production_index):
+        # list_of_productions must be changed into list containing only names of productions
         for i in range(len(list_of_productions)):
             if i == production_index:
-                self.gui.productions_history.insert('end', list_of_productions[i] + "\n", "current_state")
+                self.gui.productions_history.insert('end', list_of_productions[i][1] + "\n", "current_state")
             else:
-                self.gui.productions_history.insert('end', list_of_productions[i] + "\n", "basic_state")
+                self.gui.productions_history.insert('end', list_of_productions[i][1] + "\n", "basic_state")
 
     def print_statistics(self, statistics):
         for statistic in statistics:
             self.gui.statistics_output.insert('end', statistic.value + ": ", "statistic_name")
-            #self.gui.statistics_output.insert('end', stat.statistic.value + ": ", "statistic_name") - ta moze dzialac
             self.gui.statistics_output.insert('end', str(statistics[statistic]) + "\n", "statistic_value")
 
     # button utils
     def button_previous(self):
 
         graph_path = self.gui.production_engine.previous()  # string representing path to current graph image
-        list_of_productions = self.gui.production_engine.productions_list()  # list of productions
-        production_index = self.gui.production_engine.current_production()  # current production index
+        list_of_productions = self.gui.production_engine.productions_list()  #list of tuples (png_path, prod_name)
+        production_index = self.gui.production_engine.current_index()  # current production index
         statistics = self.production_engine.get_statistics()  # current graph statistics in dictionary
 
         # clear old output
@@ -54,8 +54,8 @@ class Buttons:
     def button_next(self):
 
         graph_path = self.gui.production_engine.next() #string representing path to current graph image
-        list_of_productions = self.gui.production_engine.productions_list() #list of productions
-        production_index = self.gui.production_engine.current_production() #current production index
+        list_of_productions = self.gui.production_engine.productions_list() #list of tuples (png_path, prod_name)
+        production_index = self.gui.production_engine.current_index() #current production index
         statistics = self.production_engine.get_statistics() #current graph statistics in dictionary
 
         #clear old output

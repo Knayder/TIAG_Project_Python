@@ -16,7 +16,7 @@ class Gui:
         self.canvas.pack()
 
         #test atributes
-        self.base_graph = ImageTk.PhotoImage(Image.open("First.png"))
+        self.base_graph = ImageTk.PhotoImage(Image.open(self.production_engine.current()))
 
         #frames
         self.main_graph_frame = tk.Frame(root)
