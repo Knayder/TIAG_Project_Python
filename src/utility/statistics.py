@@ -50,7 +50,7 @@ class Statistics:
         return len(self.subgraphs())
 
     def averge_vertex_degree(self): 
-        return self.number_of_edges() * 2 / self.number_of_nodes()
+        return round(self.number_of_edges() * 2 / self.number_of_nodes(),2)
     
     def averge_vertex_degree_abcd(self):
         if self.number_of_abcd_nodes() == 0: return 0 
@@ -58,19 +58,19 @@ class Statistics:
         for edge in self.graph.get_edge_list():
             if str(self.find_node_by_name(edge.get_source()).get_label()) in 'abcd': count += 1
             if str(self.find_node_by_name(edge.get_destination()).get_label()) in 'abcd': count += 1
-        return count/self.number_of_abcd_nodes()
+        return round(count/self.number_of_abcd_nodes(),2)
     
     def subgraphs_avarge_degree(self):
-        return self.number_of_nodes() / self.number_of_subgraphs() 
+        return round(self.number_of_nodes() / self.number_of_subgraphs(),2)
 
     def get_statistic(self):
         return {
-            'number of nodes': self.number_of_nodes(),
-            'number of edges': self.number_of_edges(),
-            'number of subgraphs': self.number_of_subgraphs(),
-            'averge vertex degree': self.averge_vertex_degree(),
-            'averge vertex abcd degree': self.averge_vertex_degree_abcd(),
-            'averge number of nodes in subgraphs': self.subgraphs_avarge_degree(),
+            StatisticsKeys.no_nodes: self.number_of_nodes(),
+            StatisticsKeys.no_edges: self.number_of_edges(),
+            StatisticsKeys.no_subgraphs: self.number_of_subgraphs(),
+            StatisticsKeys.averge_vertex_degree: self.averge_vertex_degree(),
+            StatisticsKeys.averge_vertex_degree_abcd: self.averge_vertex_degree_abcd(),
+            StatisticsKeys.subgraphs_avarge_degree: self.subgraphs_avarge_degree(),
         }
 
     def __repr__(self):

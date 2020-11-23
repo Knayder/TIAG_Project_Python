@@ -14,11 +14,12 @@ class Gui:
         self.canvas = tk.Canvas(root, height = HEIGHT, width = WIDTH)
         self.canvas.pack()
 
-        #test atributes
-        self.base_graph = ImageTk.PhotoImage(Image.open(self.production_engine.current()))
+        #graph image - I don't know why, but is myst be defined as an attribute of class, because otherwise
+        #doesn't render on a screen :(
+        self.graph_image = None
 
         #frames
-        self.main_graph_frame = tk.Frame(root)
+        self.main_graph_frame = tk.Frame(root, bg='green')
         self.loading_steps_frame = tk.Frame(root, bg='#d9ddff')
         self.action_log_frame = tk.Frame(root, bg='purple')
         self.statistics_frame = tk.Frame(root, bg='orange')
@@ -31,13 +32,16 @@ class Gui:
         self.statistics_label = tk.Label(self.statistics_frame, text="Graph statistics", bg='yellow', justify="center", font=("Calibri Light", 12))
         self.loading_steps_label = tk.Label(self.loading_steps_frame, text="Load step", bg='yellow', justify="center", font=("Calibri Light", 12))
         self.main_graph_title = tk.Label(self.main_graph_frame, text="Current graph", bg='yellow', justify='center', font=("Calibri Light", 12))
-        self.main_graph_label = tk.Label(self.main_graph_frame, image=self.base_graph, bg='white', justify='center')
+        self.main_graph_label = tk.Label(self.main_graph_frame, bg='white', justify='center')
 
         #statistics
         self.statistics_output = StatisticsOutput(self).statistics_output
 
         #action log
         self.productions_history = ProductionsHistory(self).productions_history
+
+        #load base graph
+        self.print_current()
 
         #place widgets
         self.place_everything()
@@ -71,3 +75,42 @@ class Gui:
 
     def place_productions_history(self):
         self.productions_history.place(rely = 0.2, relheight=0.8, relwidth=0.9)
+
+    def resize_image(self, image):
+        if image.width > int(WIDTH*MAIN_GRAPH_WIDTH):
+            image = image.resize((int(WIDTH*MAIN_GRAPH_WIDTH), image.height))
+        if image.height > int(HEIGHT*MAIN_GRAPH_HEIGHT*0.9):
+            image = image.resize((image.width, int(HEIGHT*MAIN_GRAPH_HEIGHT*0.9)))
+        return image
+
+    def clear_old_output(self):
+        self.productions_history.delete(0.0, 'end')
+        self.statistics_output.delete(0.0, 'end')
+        self.main_graph_label.grid_forget()
+
+    def print_history(self, list_of_productions, production_index):
+        # list_of_productions must be changed into list containing only names of productions
+        for i in range(len(list_of_productions)):
+            if i == production_index:
+                self.productions_history.insert('end', list_of_productions[i][1] + "\n", "current_state")
+            else:
+                self.productions_history.insert('end', list_of_productions[i][1] + "\n", "basic_state")
+
+    def print_statistics(self, statistics):
+        for statistic in statistics:
+            self.statistics_output.insert('end', statistic.value + ": ", "statistic_name")
+            self.statistics_output.insert('end', str(statistics[statistic]) + "\n", "statistic_value")
+
+    def print_current(self):
+        graph_path = self.production_engine.current()[0]
+        self.graph_image = ImageTk.PhotoImage(self.resize_image(Image.open(graph_path)))
+        list_of_productions = self.production_engine.production_list()
+        production_index = self.production_engine.current_index()
+        statistics = self.production_engine.get_statistics()
+
+        self.clear_old_output()
+        self.print_history(list_of_productions, production_index)
+        self.print_statistics(statistics)
+
+        # load current graph image
+        self.main_graph_label = tk.Label(self.main_graph_frame,image=self.graph_image, bg='white',justify='center')
