@@ -1,6 +1,6 @@
 import  tkinter as tk
 from PIL import Image, ImageTk
-from src.utility.statistics import StatisticsKeys #Statystyki Krzyśka - potrzebne do zmiany enuma na odp. stringa? linia 27
+from utility.statistics import StatisticsKeys #Statystyki Krzyśka - potrzebne do zmiany enuma na odp. stringa? linia 27
 
 class Buttons:
     def __init__(self, gui):
@@ -8,24 +8,6 @@ class Buttons:
         self.next_state_button = tk.Button(self.gui.loading_steps_frame, text='Next', bg='grey', command=self.button_next)
         self.previous_state_button = tk.Button(self.gui.loading_steps_frame, text='Previous', bg='grey', state=tk.DISABLED)
 
-    #additional functions
-    def clear_old_output(self):
-        self.gui.productions_history.delete(0.0, 'end')
-        self.gui.statistics_output.delete(0.0, 'end')
-        self.gui.main_graph_label.grid_forget()
-
-    def print_history(self, list_of_productions, production_index):
-        # list_of_productions must be changed into list containing only names of productions
-        for i in range(len(list_of_productions)):
-            if i == production_index:
-                self.gui.productions_history.insert('end', list_of_productions[i][1] + "\n", "current_state")
-            else:
-                self.gui.productions_history.insert('end', list_of_productions[i][1] + "\n", "basic_state")
-
-    def print_statistics(self, statistics):
-        for statistic in statistics:
-            self.gui.statistics_output.insert('end', statistic.value + ": ", "statistic_name")
-            self.gui.statistics_output.insert('end', str(statistics[statistic]) + "\n", "statistic_value")
 
     # button utils
     def button_previous(self):

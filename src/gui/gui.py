@@ -1,7 +1,7 @@
-from src.gui.constants import *
-from src.gui.buttons import *
-from src.gui.statistics_output import *
-from src.gui.productions_history import *
+from .constants import *
+from .buttons import *
+from .statistics_output import *
+from .productions_history import *
 from PIL import Image, ImageTk
 
 class Gui:
@@ -90,11 +90,11 @@ class Gui:
 
     def print_history(self, list_of_productions, production_index):
         # list_of_productions must be changed into list containing only names of productions
-        for i in range(len(list_of_productions)):
+        for i in range(len(list_of_productions)-1, -1, -1):
             if i == production_index:
-                self.productions_history.insert('end', list_of_productions[i][1] + "\n", "current_state")
+                self.productions_history.insert('end', str(i) + "   " + list_of_productions[i][1] + "\n", "current_state")
             else:
-                self.productions_history.insert('end', list_of_productions[i][1] + "\n", "basic_state")
+                self.productions_history.insert('end', str(i) + "            " + list_of_productions[i][1] + "\n", "basic_state")
 
     def print_statistics(self, statistics):
         for statistic in statistics:

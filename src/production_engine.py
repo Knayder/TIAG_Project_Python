@@ -1,8 +1,8 @@
-from src.productions_manager import *
-from src.utility.graph import Graph
-from src.utility.rng_engine import get_unique_name
+from productions_manager import *
+from utility.graph import Graph
+from utility.rng_engine import get_unique_name
 import pydot
-import src.utility.statistics
+import utility.statistics
 
 def load_start_graph( start_graph):
     file_graph = pydot.graph_from_dot_file(start_graph)[0]
@@ -28,7 +28,7 @@ class ProductionEngine:
 
     def save_to_legacy(self, production_name):
         path = 'output/graph' + str(len(self.legacy_graphs)) + '.png'
-        self.legacy_graphs.append( (path, production_name, src.utility.statistics.Statistics(self.pydot_graph).get_statistic()) )
+        self.legacy_graphs.append( (path, production_name, utility.statistics.Statistics(self.pydot_graph).get_statistic()) )
         self.pydot_graph.write_png(path)
 
     def current(self):
