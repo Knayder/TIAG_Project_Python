@@ -27,9 +27,9 @@ class ProductionEngine:
         self.save_to_legacy('Start')
 
     def save_to_legacy(self, production_name):
-        path = 'output/graph' + str(len(self.legacy_graphs)) + '.png'
+        path = 'output/graph' + str(len(self.legacy_graphs)) + '.jpg'
         self.legacy_graphs.append( (path, production_name, utility.statistics.Statistics(self.pydot_graph).get_statistic()) )
-        self.pydot_graph.write_png(path)
+        self.pydot_graph.write_jpg(path, prog=['dot','-Gsize=7,7', '-Gratio=1.0'])
 
     def current(self):
         return self.legacy_graphs[self.legacy_index]
