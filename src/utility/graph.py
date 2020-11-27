@@ -80,7 +80,6 @@ class Graph:
                 target_label = production.get_transformation()[label_to_reconnect]
             except:
                 print('Wrong transformation settings')
-            for node in filter( lambda x: x.get_name() in name_links, self.find_nodes_of_label(target_label)):
-                self.graph.add_edge(name_to_reconnect, node.get_name())
-
+            for node in list(filter( lambda x: x.get_label() == target_label, production.get_right().get_node_list())):
+                self.graph.add_edge(pydot.Edge(name_to_reconnect, name_links[node.get_name()]))
         return True
