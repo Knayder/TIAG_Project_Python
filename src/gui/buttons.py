@@ -1,13 +1,14 @@
 import  tkinter as tk
 from PIL import Image, ImageTk
-from utility.statistics import StatisticsKeys #Statystyki Krzyśka - potrzebne do zmiany enuma na odp. stringa? linia 27
+from utility.statistics import StatisticsKeys
 
 class Buttons:
     def __init__(self, gui):
         self.gui = gui
         self.next_state_button = tk.Button(self.gui.loading_steps_frame, text='Next', bg='grey', command=self.button_next)
         self.previous_state_button = tk.Button(self.gui.loading_steps_frame, text='Previous', bg='grey', state=tk.DISABLED)
-
+        self.loading_steps_label = tk.Label(self.gui.loading_steps_frame, text="Load step", bg='yellow', justify="center", font=("Calibri Light", 12))
+        self.loading_steps_label.place(relwidth=1, relheight=0.4)
 
     # button utils
     def button_previous(self):
@@ -16,7 +17,7 @@ class Buttons:
 
         if self.gui.production_engine.current_index() <= 0:
             self.previous_state_button = tk.Button(self.gui.loading_steps_frame, text="Previous", bg='grey', state=tk.DISABLED)
-            self.previous_state_button.place(relx=0.1, rely=0.85, relwidth=0.5 - 3 / 2 * 0.1, relheight=0.5, anchor='sw')
+            self.previous_state_button.place(rely=0.4, relwidth=0.5, relheight=0.6)
 
         self.gui.print_current()
 
@@ -31,5 +32,5 @@ class Buttons:
 
         self.gui.print_current()
 
-        self.previous_state_button.place(relx=0.1, rely=0.85, relwidth=0.5 - 3 / 2 * 0.1, relheight=0.5, anchor='sw')
+        self.previous_state_button.place(rely=0.4, relwidth=0.5, relheight=0.6)
         self.gui.main_graph_label.place(rely=0.1, relwidth=1, relheight=0.9)

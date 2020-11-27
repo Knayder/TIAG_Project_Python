@@ -4,6 +4,8 @@ class ProductionsHistory:
     def __init__(self, gui):
         self.gui = gui
 
+        self.log_label = tk.Label(self.gui.action_log_frame, text="Action log", bg='yellow', justify="center", font=("Calibri Light", 12))
+
         # scrollbar
         self.productions_scrollbar = tk.Scrollbar(self.gui.action_log_frame)
 
@@ -20,4 +22,5 @@ class ProductionsHistory:
         self.productions_history.tag_config("basic_state", font=("Times New Roman", 15), justify='center')
 
         #place scrollbar
+        self.log_label.place(relwidth=1, relheight=0.2)
         self.productions_scrollbar.place(relx=0.9, rely=0.2, relwidth=0.1, relheight=0.8)
