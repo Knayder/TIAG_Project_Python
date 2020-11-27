@@ -7,12 +7,11 @@ class Graph:
     def __init__(self, graph: pydot.Graph):
         self.graph = graph
     
-    def find_nodes_of_label(self, label):
-        nodes = []
+    def find_node_of_label(self, label):
         for node in self.graph.get_node_list():
             if node.get_label() == label:
-                nodes.append(node)
-        return nodes
+                return node
+        return None
     
     def remove_node_of_name(self, name):
         names_to_reconnect = []
@@ -35,11 +34,10 @@ class Graph:
         
 
     def apply_production(self, production: Production):
-        nodes_to_replace: [] = self.find_nodes_of_label(production.get_left())
-        if len(nodes_to_replace) == 0:
+        node_to_replace: pydot.Node = self.find_node_of_label(production.get_left())
+        if node_to_replace == None:
             return False
         
-        node_to_replace: pydot.Node = nodes_to_replace[0]
         try:
             names_to_reconnect = self.remove_node_of_name(node_to_replace.get_name())
         except:
@@ -59,12 +57,10 @@ class Graph:
 
 
         for edge in production.get_right().get_edge_list():
-            #---
-            source_label = production.get_right().get_node(edge.get_source())[0].get_label()  
+            #---  
             source_name = name_links[edge.get_source()]
 
             #--
-            destination_label = production.get_right().get_node(edge.get_destination())[0].get_label()
             destination_name = name_links[edge.get_destination()]
 
             self.graph.add_edge( pydot.Edge(source_name, destination_name) )
@@ -76,10 +72,12 @@ class Graph:
 
         for name_to_reconnect in names_to_reconnect:
             label_to_reconnect = self.graph.get_node(name_to_reconnect)[0].get_label()
+
             try:
                 target_label = production.get_transformation()[label_to_reconnect]
             except:
                 print('Wrong transformation settings')
+            
             for node in list(filter( lambda x: x.get_label() == target_label, production.get_right().get_node_list())):
                 self.graph.add_edge(pydot.Edge(name_to_reconnect, name_links[node.get_name()]))
         return True
