@@ -6,7 +6,7 @@ class RandomProduction:
         self.gui = gui
         self.random_production_frame = tk.Frame(self.gui.root, bg = 'pink')
         self.entry = tk.Entry(self.random_production_frame)
-        self.do_button = tk.Button(self.random_production_frame, text = 'DO', bg = 'grey')
+        self.do_button = tk.Button(self.random_production_frame, text = 'DO', bg = 'grey', command = self.generate_n_random)
         self.random_production_label = tk.Label(self.random_production_frame, text = 'Generate random', bg = 'yellow')
 
     def place(self):
@@ -15,3 +15,15 @@ class RandomProduction:
         self.entry.place(rely = 0.4, relwidth = 0.8, relheight = 0.6)
         self.do_button.place(relx = 0.8, rely = 0.4, relwidth = 0.2, relheight = 0.6)
 
+    def generate_n_random(self):
+        try:
+            n = int(self.entry.get())
+            if n <= 0:
+                raise ValueError
+        except ValueError:
+            print("Number of productions must be positive integer!")
+        else:
+            print(n)
+            #call the function executing n productions
+            self.gui.print_current_state()
+        
