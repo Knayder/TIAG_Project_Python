@@ -74,7 +74,7 @@ class ProductionEngine:
         return self.current()
     
     def execute_production(self, production_name):
-        production_to_execute = list(filter(lambda x: x.get_name == production_name, self.productions_manager.production))[0]
+        production_to_execute = list(filter(lambda x: x.get_name() == production_name, self.productions_manager.production))[0]
         if self.graph.apply_production(production_to_execute):
             self.save_to_legacy(production_to_execute.get_name())
             self.legacy_index += 1
