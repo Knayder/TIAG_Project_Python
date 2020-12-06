@@ -67,7 +67,10 @@ class ProductionEngine:
     def execute_n_productions(self, n):
         self.legacy_index = len(self.legacy_graphs) - 1
         for i in range(n):
-            self.next()
+            executable = self.get_list_of_productions()
+            self.graph.apply_production(executable[random.randint(0, len(executable) - 1)])
+        self.save_to_legacy('execute ' + str(n) + ' productions')
+        self.legacy_index += 1
         return self.current()
     
     def execute_production(self, production_name):
