@@ -50,7 +50,7 @@ class ProductionEngine:
                 if self.graph.apply_production(production):
                     self.save_to_legacy(production.get_name())
                     self.legacy_index += 1
-                    break;
+                    break
             
         else:
             self.legacy_index += 1
@@ -63,6 +63,33 @@ class ProductionEngine:
 
     def get_statistics(self):
         return self.current()[2]
+    
+    def execute_n_productions(self, n):
+        self.legacy_index = len(self.legacy_graphs) - 1
+        for i in range(n):
+            self.next()
+        return self.current()
+    
+    def execute_production(self, production_name):
+        production_to_execute = list(filter(lambda x: x.get_name == production_name, self.productions_manager.production))[0]
+        if self.graph.apply_production(production_to_execute):
+            self.save_to_legacy(production_to_execute.get_name())
+            self.legacy_index += 1
+            return self.current()
+        print("unable to execute production!")
+        return False
+    
+    def get_list_of_productions(self):
+        executable = []
+        for production in self.productions_manager.production:
+            if self.graph.can_execute_production(production): executable.append(production)
+        return executable
+
+        
+
+
+
+
 
 
 

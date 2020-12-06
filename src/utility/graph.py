@@ -31,7 +31,9 @@ class Graph:
         self.graph.del_node(name)
         return names_to_reconnect
     
-        
+    def can_execute_production(self, production: Production):
+        if self.find_node_of_label(production.get_left()) == None: return False
+        return True
 
     def apply_production(self, production: Production):
         node_to_replace: pydot.Node = self.find_node_of_label(production.get_left())
