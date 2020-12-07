@@ -32,6 +32,11 @@ class Graph:
         self.nodes_to_edges[edge.get_destination()].remove(edge)
         self.graph.del_edge(edge.get_source(), edge.get_destination())
 
+    def add_node(self, node: pydot.Node):
+        self.nodes_to_edges[node.get_name()] = []
+        if node.get_label() not in self.nodes_by_labels.keys(): self.nodes_by_labels[node.get_label()] = [node]
+        self.nodes_by_labels[node.get_label()] += [node]
+        self.graph.add_node(node)
 
     def remove_node_of_name(self, node):
         names_to_reconnect = []
@@ -39,17 +44,23 @@ class Graph:
             source = edge.get_source()
             destination = edge.get_destination()
             if destination == node.get_name():
+                self.nodes_to_edges[edge.get_source()].remove(edge)
                 names_to_reconnect.append(source)
 
             elif source == node.get_name():
+                self.nodes_to_edges[edge.get_destination()].remove(edge)
                 names_to_reconnect.append(destination)
             
             else:
                 continue
 
-            self.delete_edge(edge)
-        self.nodes_to_edges.__delitem__[node.get_name()]
-        self.nodes_by_labels[node.get_label()].remove(node)
+            self.graph.del_edge(edge.get_source(), edge.get_destination())
+        del self.nodes_to_edges[node.get_name()]
+        try:
+            while True: self.nodes_by_labels[node.get_label()].remove(node)
+        except ValueError:
+            None
+        if len(self.nodes_by_labels[node.get_label()]) == 0: del self.nodes_by_labels[node.get_label()]
         self.graph.del_node(node.get_name())
         return names_to_reconnect
     
@@ -62,11 +73,7 @@ class Graph:
         if node_to_replace == None:
             return False
         
-        try:
-            names_to_reconnect = self.remove_node_of_name(node_to_replace)
-        except:
-            print('Wrong left production\'s side')
-            return False
+        names_to_reconnect = self.remove_node_of_name(node_to_replace)
 
         name_links = {}
 
@@ -74,8 +81,7 @@ class Graph:
             node_label = node.get_label()
             node_name = get_unique_name()
             name_links[node.get_name()] = node_name
-
-            self.graph.add_node( pydot.Node(
+            self.add_node( pydot.Node(
                 name = node_name,
                 label = node_label
             ))
@@ -88,7 +94,7 @@ class Graph:
             #--
             destination_name = name_links[edge.get_destination()]
 
-            self.graph.add_edge( pydot.Edge(source_name, destination_name) )
+            self.add_edge( pydot.Edge(source_name, destination_name) )
 
             
             
@@ -104,5 +110,5 @@ class Graph:
                 print('Wrong transformation settings')
             
             for node in list(filter( lambda x: x.get_label() == target_label, production.get_right().get_node_list())):
-                self.graph.add_edge(pydot.Edge(name_to_reconnect, name_links[node.get_name()]))
+                self.add_edge(pydot.Edge(name_to_reconnect, name_links[node.get_name()]))
         return True

@@ -9,10 +9,10 @@ def load_start_graph( start_graph):
     start_production = Production(ParsedProduction('Start Production', 'S', file_graph, None))
 
     pydot_graph = pydot.Dot('Graph', graph_type="graph")
-    pydot_graph.add_node(pydot.Node(name=get_unique_name(), label='S'))
+    start_node = pydot.Node(name=get_unique_name(), label='S')
+    pydot_graph.add_node(start_node)
 
     graph = Graph(pydot_graph)
-
     graph.apply_production(start_production)
     return graph, pydot_graph
 
