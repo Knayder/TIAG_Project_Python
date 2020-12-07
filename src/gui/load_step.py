@@ -16,21 +16,21 @@ class LoadStep:
     def button_previous(self):
 
         self.gui.production_engine.previous()
-
-        if self.gui.production_engine.current_index() <= 0:
-            self.previous_state_button = tk.Button(self.loading_steps_frame, text="Previous", bg='grey', state=tk.DISABLED)
-
         self.gui.print_current_state()
         self.place()
 
     def button_next(self):
 
         self.gui.production_engine.next()
-
-        #allow previous button to be clicked
-        self.previous_state_button = tk.Button(self.loading_steps_frame, text="Previous", bg='grey', command=self.button_previous)
-
         self.gui.print_current_state()
+        self.place()
+
+    def update_buttons(self):
+        if self.gui.production_engine.current_index() <= 0:
+            self.previous_state_button = tk.Button(self.loading_steps_frame, text="Previous", bg='grey', state=tk.DISABLED)
+        else:
+            self.previous_state_button = tk.Button(self.loading_steps_frame, text="Previous", bg='grey', command=self.button_previous)
+
         self.place()
 
     def place(self):

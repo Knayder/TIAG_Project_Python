@@ -1,3 +1,4 @@
+from enum import Enum, auto
 #CONSTANTS
 HEIGHT = 800
 WIDTH = 1200
@@ -19,3 +20,7 @@ TITLE_COLOR = '#a3ba9c'
 TITLE_FONT = ("Calibri Light", 12)
 OUTPUT_FONT = ("Calibri Light", 12)
 INPUT_FONT = ("Calibri Light", 12)
+
+class ProgramStatus(Enum):
+    CURRENT = auto()
+    HISTORY = auto()

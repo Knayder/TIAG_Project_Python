@@ -22,7 +22,14 @@ class ChooseProduction:
     def clear(self):
         self.choose_production_listbox.delete(0, 'end')
 
-    def set_list_of_productions(self, available_productions):
+    def update_buttons(self):
+        if self.gui.status == ProgramStatus.CURRENT:
+            self.do_button = tk.Button(self.choose_production_frame, text = 'Apply Production', bg = 'grey', command = self.apply_production)
+        else:
+            self.do_button = tk.Button(self.choose_production_frame, text = 'Apply Production', bg = 'grey', state= tk.DISABLED)
+        self.place()
+
+    def print_list_of_productions(self, available_productions):
         self.productions = list(map(lambda x: x.get_name(),available_productions))
         self.display_productions()
 
