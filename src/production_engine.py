@@ -71,6 +71,9 @@ class ProductionEngine:
         self.legacy_index = len(self.legacy_graphs) - 1
         for i in range(n):
             executable = self.get_list_of_productions()
+            if len(executable) == 0:
+                print("no productions cna be done")
+                break
             self.graph.apply_production(executable[random.randint(0, len(executable) - 1)])
         self.save_to_legacy('execute ' + str(n) + ' productions')
         self.legacy_index += 1
