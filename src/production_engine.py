@@ -36,6 +36,9 @@ class ProductionEngine:
     
     def current_index(self):
         return self.legacy_index
+
+    def legacy_length(self):
+        return len(self.legacy_graphs) - 1
     
     def production_list(self):
         return self.legacy_graphs

@@ -1,3 +1,4 @@
+from enum import Enum, auto
 #CONSTANTS
 HEIGHT = 800
 WIDTH = 1200
@@ -14,3 +15,12 @@ ACTION_LOG_HEIGHT = 4*CHOOSE_RANDOM_HEIGHT
 ACTION_LOG_WIDTH = LOADING_STEPS_WIDTH
 STATISTICS_HEIGHT = ACTION_LOG_HEIGHT
 STATISTICS_WIDTH = LOADING_STEPS_WIDTH
+
+TITLE_COLOR = '#a3ba9c'
+TITLE_FONT = ("Calibri Light", 12)
+OUTPUT_FONT = ("Calibri Light", 12)
+INPUT_FONT = ("Calibri Light", 12)
+
+class ProgramStatus(Enum):
+    CURRENT = auto()
+    HISTORY = auto()
