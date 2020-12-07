@@ -31,7 +31,9 @@ class Graph:
         self.graph.del_node(name)
         return names_to_reconnect
     
-        
+    def can_execute_production(self, production: Production):
+        if self.find_node_of_label(production.get_left()) == None: return False
+        return True
 
     def apply_production(self, production: Production):
         node_to_replace: pydot.Node = self.find_node_of_label(production.get_left())
@@ -43,45 +45,25 @@ class Graph:
         except:
             print('Wrong left production\'s side')
 
-        new_subgraph_dict = {}
+        name_links = {}
 
         for node in production.get_right().get_node_list():
-            node_label = node.get_name()
+            node_label = node.get_label()
             node_name = get_unique_name()
+            name_links[node.get_name()] = node_name
 
             self.graph.add_node( pydot.Node(
                 name = node_name,
                 label = node_label
             ))
 
-            new_subgraph_dict[node_label] = node_name
 
         for edge in production.get_right().get_edge_list():
-            #---
-            source_label = edge.get_source()
-            source_name = None
-            if source_label not in new_subgraph_dict:
-                source_name = get_unique_name()
-                self.graph.add_node( pydot.Node(
-                    name=source_name,
-                    label=source_label
-                ) )
-                new_subgraph_dict[source_label] = source_name
-            else:
-                source_name = new_subgraph_dict[source_label]
+            #---  
+            source_name = name_links[edge.get_source()]
 
             #--
-            destination_label = edge.get_destination()
-            destination_name = None
-            if destination_label not in new_subgraph_dict:
-                destination_name = get_unique_name()
-                self.graph.add_node( pydot.Node(
-                    name=destination_name,
-                    label=destination_label
-                ) )
-                new_subgraph_dict[destination_label] = destination_name
-            else:
-                destination_name = new_subgraph_dict[destination_label]
+            destination_name = name_links[edge.get_destination()]
 
             self.graph.add_edge( pydot.Edge(source_name, destination_name) )
 
@@ -92,11 +74,12 @@ class Graph:
 
         for name_to_reconnect in names_to_reconnect:
             label_to_reconnect = self.graph.get_node(name_to_reconnect)[0].get_label()
+
             try:
-                self.graph.add_edge(pydot.Edge(
-                    name_to_reconnect,
-                    new_subgraph_dict[transformation[label_to_reconnect]]
-                ))
+                target_label = production.get_transformation()[label_to_reconnect]
             except:
                 print('Wrong transformation settings')
+            
+            for node in list(filter( lambda x: x.get_label() == target_label, production.get_right().get_node_list())):
+                self.graph.add_edge(pydot.Edge(name_to_reconnect, name_links[node.get_name()]))
         return True

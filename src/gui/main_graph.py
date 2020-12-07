@@ -9,7 +9,7 @@ class MainGraph:
         self.main_graph_frame = tk.Frame(gui.root, bg='green')
         self.graph_image = None
         self.graph_image_tk = None
-        self.main_graph_title = tk.Label(self.main_graph_frame, text="Current graph", bg='yellow', justify='center', font=("Calibri Light", 12))
+        self.main_graph_title = tk.Label(self.main_graph_frame, text="Current graph", bg=TITLE_COLOR, justify='center', font=TITLE_FONT)
         self.main_graph_label = tk.Label(self.main_graph_frame, bg='white', justify='center')
 
     def place(self):

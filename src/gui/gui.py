@@ -43,6 +43,8 @@ class Gui:
         self.productions_history.clear()
         self.statistics_output.clear()
         self.main_graph.clear()
+        self.choose_production.clear()
+        self.random_production.clear()
 
     def print_current_state(self):
         self.clear_old_output()
@@ -50,7 +52,9 @@ class Gui:
         list_of_productions = self.production_engine.production_list()
         production_index = self.production_engine.current_index()
         statistics = self.production_engine.get_statistics()
+        available_productions = self.production_engine.get_list_of_productions()
 
         self.main_graph.print_graph(graph_path)
         self.productions_history.print_history(list_of_productions, production_index)
         self.statistics_output.print_statistics(statistics)
+        self.choose_production.set_list_of_productions(available_productions)

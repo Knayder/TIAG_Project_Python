@@ -6,7 +6,7 @@ class Production:
         self.parsed_production = parsed_production
 
     def get_name(self):
-        return self.parsed_production.name;
+        return self.parsed_production.name
 
     def get_transformation(self):
         return self.parsed_production.transformation
