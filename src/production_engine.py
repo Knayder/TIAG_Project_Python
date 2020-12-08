@@ -72,7 +72,7 @@ class ProductionEngine:
         for i in range(n):
             executable = self.get_list_of_productions()
             if len(executable) == 0:
-                print("no productions cna be done")
+                print("No productions can be done!")
                 break
             self.graph.apply_production(executable[random.randint(0, len(executable) - 1)])
         self.save_to_legacy('execute ' + str(n) + ' productions')

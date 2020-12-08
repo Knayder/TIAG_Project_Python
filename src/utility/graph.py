@@ -16,7 +16,7 @@ class Graph:
         for edge in self.graph.get_edge_list():
             for node in self.graph.get_node_list():
                 if edge.get_source() == node.get_name() or edge.get_destination() == node.get_name():
-                    nodes_to_edges[node.get_name()] += [edge]
+                    self.nodes_to_edges[node.get_name()] += [edge]
     
     def find_node_of_label(self, label):
         if label in self.nodes_by_labels.keys(): return self.nodes_by_labels[label][0]
@@ -77,10 +77,21 @@ class Graph:
 
         name_links = {}
 
+
+        transformation = production.get_transformation()
+
+        labels_dic = {}
+
         for node in production.get_right().get_node_list():
             node_label = node.get_label()
             node_name = get_unique_name()
             name_links[node.get_name()] = node_name
+
+            if node_label not in labels_dic:
+                labels_dic[node_label] = [node_name]
+            else:
+                labels_dic[node_label] += [node_name]
+            
             self.add_node( pydot.Node(
                 name = node_name,
                 label = node_label
@@ -99,7 +110,7 @@ class Graph:
             
             
             
-        transformation = production.get_transformation()
+        
 
         for name_to_reconnect in names_to_reconnect:
             label_to_reconnect = self.graph.get_node(name_to_reconnect)[0].get_label()
@@ -109,6 +120,7 @@ class Graph:
             except:
                 print('Wrong transformation settings')
             
-            for node in list(filter( lambda x: x.get_label() == target_label, production.get_right().get_node_list())):
-                self.add_edge(pydot.Edge(name_to_reconnect, name_links[node.get_name()]))
+            if label_to_reconnect in labels_dic:
+                for name in labels_dic[label_to_reconnect]:
+                    self.add_edge(pydot.Edge(name_to_reconnect, name))
         return True
