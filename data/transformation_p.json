@@ -1,0 +1,125 @@
+{
+    "Production1":{
+        "left": "A",
+        "right": "data/production1.dot",
+        "transformation": {
+            "A": "A",
+            "a": "A"
+        }
+    },
+
+    "Production2":{
+        "left": "A",
+        "right": "data/production2.dot",
+        "transformation": {
+            "B": "B",
+            "C": "C",
+            "b": "B",
+            "c": "C"
+        }
+    },
+
+    "Production3":{
+        "left": "A",
+        "right": "data/production3.dot",
+        "transformation": {
+            "A": "A",
+            "B": "B",
+            "C": "C",
+            "a": "A",
+            "b": "B",
+            "c": "C"
+        }
+    },
+
+    "Production4":{
+        "left": "A",
+        "right": "data/production4.dot",
+        "transformation": {
+            "B": "a",
+            "C": "a",
+            "b": "a",
+            "c": "a"
+        }
+    },
+    "Production5":{
+        "left": "B",
+        "right": "data/production5.dot",
+        "transformation": {
+            "A": "b",
+            "C": "b",
+            "a": "b",
+            "c": "b"
+        }
+    },
+    "Production6":{
+        "left": "C",
+        "right": "data/production6.dot",
+        "transformation": {
+            "A": "c",
+            "B": "c",
+            "a": "c",
+            "b": "c"
+        }
+    },
+    "Production7":{
+        "left": "A",
+        "right": "data/production7.dot",
+        "transformation": {
+            "A": "B",
+            "B": "A",
+            "a": "B",
+            "b": "A"
+        }
+    },
+    "Production8":{
+        "left": "A",
+        "right": "data/production8.dot",
+        "transformation": {
+            "A": "C",
+            "C": "A",
+            "a": "C",
+            "c": "A"
+        }
+    },
+    "Production9":{
+        "left": "B",
+        "right": "data/production9.dot",
+        "transformation": {
+            "A": "B",
+            "B": "A",
+            "a": "B",
+            "b": "A"
+        }
+    },
+    "Production10":{
+        "left": "B",
+        "right": "data/production10.dot",
+        "transformation": {
+            "B": "C",
+            "C": "B",
+            "b": "C",
+            "c": "B"
+        }
+    },
+    "Production11":{
+        "left": "C",
+        "right": "data/production11.dot",
+        "transformation": {
+            "A": "C",
+            "C": "A",
+            "a": "C",
+            "c": "A"
+        }
+    },
+    "Production12":{
+        "left": "C",
+        "right": "data/production12.dot",
+        "transformation": {
+            "B": "C",
+            "C": "B",
+            "b": "C",
+            "c": "B"
+        }
+    }
+}

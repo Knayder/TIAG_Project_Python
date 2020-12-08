@@ -1,0 +1,5 @@
+graph RHS_8 {
+v1 -- v2;
+v1 [label=C];
+v2 [label=A];
+}
