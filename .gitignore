@@ -2,6 +2,5 @@ __pycache__
 .vscode
 *.png
 *.pdf
-data
 simple_test.py
 output

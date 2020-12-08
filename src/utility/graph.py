@@ -65,7 +65,8 @@ class Graph:
         return names_to_reconnect
     
     def can_execute_production(self, production: Production):
-        if self.find_node_of_label(production.get_left()) == None: return False
+        if self.find_node_of_label(production.get_left()) == None:
+            return False
         return True
 
     def apply_production(self, production: Production):
@@ -78,7 +79,7 @@ class Graph:
         name_links = {}
 
 
-        transformation = production.get_transformation()
+        
 
         labels_dic = {}
 
@@ -109,16 +110,14 @@ class Graph:
 
             
             
-                 
+        transformation = production.get_transformation()   
 
         for name_to_reconnect in names_to_reconnect:
             label_to_reconnect = self.graph.get_node(name_to_reconnect)[0].get_label()
 
-            try:
-                target_label = production.get_transformation()[label_to_reconnect]
-            except:
-                print('Wrong transformation settings')
+            if label_to_reconnect in transformation:
+                target_label = transformation[label_to_reconnect]
 
-            for name in labels_dic[target_label]:
-                self.add_edge(pydot.Edge(name_to_reconnect, name))
+                for name in labels_dic[target_label]:
+                    self.add_edge(pydot.Edge(name_to_reconnect, name))
         return True

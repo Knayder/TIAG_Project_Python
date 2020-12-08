@@ -29,7 +29,7 @@ class ProductionEngine:
     def save_to_legacy(self, production_name):
         path = 'output/graph' + str(len(self.legacy_graphs)) + '.jpg'
         self.legacy_graphs.append( (path, production_name, utility.statistics.Statistics(self.pydot_graph).get_statistic()) )
-        self.pydot_graph.write_jpg(path, prog=['dot','-Gsize=7,7', '-Gratio=1.0'])
+        self.pydot_graph.write_jpg(path, prog=['dot','-Gsize=12,12', '-Gratio=1.0'])
 
     def current(self):
         return self.legacy_graphs[self.legacy_index]
@@ -91,7 +91,8 @@ class ProductionEngine:
     def get_list_of_productions(self):
         executable = []
         for production in self.productions_manager.production:
-            if self.graph.can_execute_production(production): executable.append(production)
+            if self.graph.can_execute_production(production):
+                executable.append(production)
         return executable
 
         
