@@ -109,8 +109,7 @@ class Graph:
 
             
             
-            
-        
+                 
 
         for name_to_reconnect in names_to_reconnect:
             label_to_reconnect = self.graph.get_node(name_to_reconnect)[0].get_label()
@@ -119,8 +118,7 @@ class Graph:
                 target_label = production.get_transformation()[label_to_reconnect]
             except:
                 print('Wrong transformation settings')
-            
-            if label_to_reconnect in labels_dic:
-                for name in labels_dic[label_to_reconnect]:
-                    self.add_edge(pydot.Edge(name_to_reconnect, name))
+
+            for name in labels_dic[target_label]:
+                self.add_edge(pydot.Edge(name_to_reconnect, name))
         return True
