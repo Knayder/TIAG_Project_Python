@@ -1,0 +1,5 @@
+graph RHS_7 {
+v1 -- v2;
+v1 [label=B];
+v2 [label=A];
+}

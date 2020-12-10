@@ -1,0 +1,8 @@
+graph RHS_1{
+v1 -- v2;
+v2 -- v3;
+v3 -- v1;
+v1 [label=A];
+v2 [label=A];
+v3 [label=A];
+}
